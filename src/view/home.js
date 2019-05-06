@@ -24,7 +24,13 @@ export default class home extends Component {
             imagePlayerTwo: "",
             actacksPlayerOne: [],
             actacksPlayerTwo: [], 
-            imageAtack: "https://backgrounddownload.com/wp-content/uploads/2018/09/pokemon-arena-background-3.png"        
+            imageAtack: "https://backgrounddownload.com/wp-content/uploads/2018/09/pokemon-arena-background-3.png",
+            lifeStatusBarOne: 100,
+            lifeStatusBarTwo: 100,
+            namePlayerOne: "",
+            namePlayerTwo: "",
+            defendingPlayerOne:0,
+            defendingPlayerTwo: 0
         };
         this.pokemonSelectedUser = this.pokemonSelectedUser.bind(this);
         this.deployAtack = this.deployAtack.bind(this);
@@ -67,11 +73,25 @@ export default class home extends Component {
        var dataPlayerOne = allDataPokemon[indexPlayerOne];
        var dataPlayerTwo = allDataPokemon[indexPlayerTwo];
 
-       //Asigando la imagen del pokemon seleccionado por la maquina y el usuario
-       this.setState({imagePlayerOne: dataPlayerOne.urlImg, imagePlayerTwo: dataPlayerTwo.urlImg});
+       console.log("DATA", dataPlayerTwo);
+       this.setState({
+           indexPlayerOne: indexPlayerOne,
+           indexPlayerTwo: indexPlayerTwo,
+            //Asigando la imagen del pokemon seleccionado por la maquina y el usuario
+           imagePlayerOne: dataPlayerOne.urlImg, 
+           imagePlayerTwo: dataPlayerTwo.urlImg,
+           //Asignando la lista de poderes a cada pokemon selecionado 
+           actacksPlayerOne:dataPlayerOne.arAtacks, 
+           actacksPlayerTwo: dataPlayerTwo.arAtacks,
+           //Asignando datos basicos
+           namePlayerOne: dataPlayerOne.stName,
+           namePlayerTwo: dataPlayerTwo.stName,
 
-       //Asignando la lista de poderes a cada pokemon selecionado 
-       this.setState({actacksPlayerOne:dataPlayerOne.arAtacks, actacksPlayerTwo: dataPlayerTwo.arAtacks});
+           defendingPlayerOne: dataPlayerOne.nuDf,
+           defendingPlayerTwo: dataPlayerTwo.nuDf,         
+        });
+
+
     }
 
 
@@ -86,10 +106,57 @@ export default class home extends Component {
         return (randPlayerTwo == noIndex) ? this.get_randonMachinePlayer(noIndex, maxRandom) : randPlayerTwo;
     }
 
+    /**
+     * @param {Valor de poder lanzado} nuAtckPower 
+     * @param {Animacion del poder lanzado} imgAtack 
+     */
     deployAtack = (nuAtckPower, imgAtack) => {
-        //Asigna la animacion del ataque selecionado
-        console.log("Atack", nuAtckPower, imgAtack)
-        this.setState({imageAtack:imgAtack});
+        
+
+       //----CUANDO ATACA EL USUARIO----\\
+       if(nuAtckPower > this.state.defendingPlayerTwo){
+         var lifePlayerTwo_tmp = nuAtckPower - this.state.defendingPlayerTwo;//Quita los puntos de vida cuando ataca el usuario
+        }
+        console.log("Atack Value", lifePlayerTwo_tmp);
+        this.setState({
+            imageAtack: imgAtack, //Asigna la animacion del ataque selecionado   
+            lifeStatusBarTwo: lifePlayerTwo_tmp, //Valor para quitae puntos de vida al opente.
+        });
+
+        //----CUANDO ATACA LA MAQUINA----\\
+        setTimeout(function(){ this.atackMachine(); }, 3000);
+         
+
+    }
+
+    atackMachine(){
+        var dataAtackPlayerTwo = this.selectRandomAtack();        
+
+        if(dataAtackPlayerTwo['nuAtckPower'] > this.state.defendingPlayerOne){
+            var lifePlayerOne_tmp = dataAtackPlayerTwo['nuAtckPower'] - this.state.defendingPlayerOne;
+        }
+        
+        this.setState({
+            imageAtack: dataAtackPlayerTwo['imgAtck'], //Asigna la animacion del ataque selecionado   
+            lifeStatusBarOne: lifePlayerOne_tmp, //Valor para quitae puntos de vida al opente.
+        });
+    }
+    /**
+     * Se encarga de selecionar un ataque al azar 
+     */
+    selectRandomAtack(){
+        var allDataPokemon = this.state.allData; //Trae la data del web service ya alcenada en el State
+        var dataPlayerTwo = allDataPokemon[this.state.indexPlayerTwo];//Filtra la data por el indice del player Two
+        var arAtacks = dataPlayerTwo.arAtacks;//Seleciona el array de ataques
+
+        var randomIdex = Math.floor((Math.random() * 4) ); // Busca un indice ramdon para selecionar el ataque
+        var dataAtackPlayerTwo = new Array();
+        dataAtackPlayerTwo['nuAtckPower'] = arAtacks[randomIdex].nuAtckPower; // Seleciona el valor del atque
+        dataAtackPlayerTwo['imgAtck'] = arAtacks[randomIdex].imgAtck; //Seleciona la animacion del ataque
+
+        
+        return dataAtackPlayerTwo;
+
     }
     render() {
         
@@ -104,7 +171,7 @@ export default class home extends Component {
                             <CombatArea imageAtack={this.state.imageAtack}/>
                             <PlacePlayerTwo imagePlayerTwo={this.state.imagePlayerTwo} />
                         </div>
-                        <LifeStatusBar />
+                        <LifeStatusBar namePlayerOne={this.state.namePlayerOne} namePlayerTwo={this.state.namePlayerTwo} lifeStatusBarOne={this.state.lifeStatusBarOne} lifeStatusBarTwo={this.state.lifeStatusBarTwo} />
                         <div className="row">
                             <PlacePlayerOne  imagePlayerOne= {this.state.imagePlayerOne}/>
                             <Atacks atacks={this.state.actacksPlayerOne} deployAtack={this.deployAtack} />
