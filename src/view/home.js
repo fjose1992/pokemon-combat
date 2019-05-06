@@ -24,7 +24,7 @@ export default class home extends Component {
             imagePlayerTwo: "",
             actacksPlayerOne: [],
             actacksPlayerTwo: [], 
-            imageAtack: ""        
+            imageAtack: "https://backgrounddownload.com/wp-content/uploads/2018/09/pokemon-arena-background-3.png"        
         };
         this.pokemonSelectedUser = this.pokemonSelectedUser.bind(this);
         this.deployAtack = this.deployAtack.bind(this);
