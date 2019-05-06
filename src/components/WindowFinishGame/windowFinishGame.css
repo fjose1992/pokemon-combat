@@ -1,0 +1,16 @@
+.bg-finish {
+    /* The image used */          
+    height: 500px;
+      
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+.bg-finish-lose{
+  background-image: url("https://cdn.wallpapersafari.com/42/44/XsLqFy.jpg");
+}
+
+.bg-finish-win{
+  background-image: url("https://ak5.picdn.net/shutterstock/videos/34233715/thumb/1.jpg");
+}

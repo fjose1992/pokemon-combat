@@ -6,7 +6,7 @@ export default class Atacks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
+            namePlayerOne: "",
             atacks: ""
         }
 
@@ -38,7 +38,7 @@ export default class Atacks extends Component {
         }
         return (
             <div className="col">
-                <h3 className="title-atack-player-one">Ataques disponibles de Blastiose</h3>
+                <h3 className="title-atack-player-one">Ataques disponibles de {this.props.namePlayerOne}</h3>
                 <div className="atacks-buttons">
                 </div>
                 {atacksRender}

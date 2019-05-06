@@ -6,7 +6,7 @@
 
 @keyframes animationPlayer {
     0%   { margin-left:0px; margin-top:0px;}
-    50%  { margin-left:0px; margin-top:40px;}
+    50%  { margin-left:0px; margin-top:30px;}
     100% { margin-left:0px; margin-top:0px;}
   
   

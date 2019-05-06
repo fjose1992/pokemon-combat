@@ -17,12 +17,13 @@ export default class LifeStatusBar extends Component {
 
 
     render() {
-        
+        var lifeStatusBarOne = (this.props.lifeStatusBarOne <= 0)? 0 : this.props.lifeStatusBarOne;
+        var lifeStatusBarTwo = (this.props.lifeStatusBarTwo <=0)? 0 : this.props.lifeStatusBarTwo;
         return (
             <div className="row">
                 <div className="col">
-                    <p style={{ width: "80%" }} data-value={this.props.lifeStatusBarOne} className="dataPlayer">{this.props.namePlayerOne}</p>
-                    <progress max="100" value={this.props.lifeStatusBarOne} className="lifePlayerOne">
+                    <p style={{ width: "80%" }} data-value={lifeStatusBarOne} className="dataPlayer">{this.props.namePlayerOne}</p>
+                    <progress max="100" value={lifeStatusBarOne} className="lifePlayerOne">
                         <div className="progress-bar">
                             
                         </div>
@@ -30,8 +31,8 @@ export default class LifeStatusBar extends Component {
                 </div>
 
                 <div className="col">
-                    <p style={{ width: "80%" }} data-value={this.props.lifeStatusBarTwo} className="dataPlayer">{this.props.namePlayerTwo}</p>
-                    <progress max="100" value={this.props.lifeStatusBarTwo} className="lifePlayerTwo" style={{transform: "rotate(180deg)"}}>
+                    <p style={{ width: "80%" }} data-value={lifeStatusBarTwo} className="dataPlayer">{this.props.namePlayerTwo}</p>
+                    <progress max="100" value={lifeStatusBarTwo} className="lifePlayerTwo" style={{transform: "rotate(180deg)"}}>
                         <div className="progress-bar">
                             
                         </div>

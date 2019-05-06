@@ -6,8 +6,8 @@ import PlacePlayerTwo from "../components/PlacePlayerTwo/PlacePlayerTwo";
 import LifeStatusBar from "../components/LifeStatusBar/LifeStatusBar";
 import Atacks from "../components/Atacks/Atacks";
 import PlacePlayerOne from "../components/PlacePlayerOne/PlacePlayerOne";
-import SelectPlayer from "../components/SelectPlayer/SelectPlayer"
-
+import SelectPlayer from "../components/SelectPlayer/SelectPlayer";
+import WindowFinishGame from "../components/WindowFinishGame/WindowFinishGame";
 
 
 export default class home extends Component {
@@ -30,7 +30,9 @@ export default class home extends Component {
             namePlayerOne: "",
             namePlayerTwo: "",
             defendingPlayerOne:0,
-            defendingPlayerTwo: 0
+            defendingPlayerTwo: 0,
+            stateGamePlayerOne: 0,
+            stateGamePlayerTwo: 0,
         };
         this.pokemonSelectedUser = this.pokemonSelectedUser.bind(this);
         this.deployAtack = this.deployAtack.bind(this);
@@ -43,7 +45,7 @@ export default class home extends Component {
      */
     componentWillMount() {        
         var th = this;
-        var responseData = axios.get('http://www.mocky.io/v2/5ccdd0fc2e0000d623182b1b');
+        var responseData = axios.get('http://www.mocky.io/v2/5ccfc934320000630000f7e6');
         responseData.then(function (value){
             th.setState({allData: value.data})            
             th.set_pokemon_name_list();
@@ -124,6 +126,10 @@ export default class home extends Component {
             lifeStatusBarTwo: lifePlayerTwo_tmp, //Valor para quitae puntos de vida al opente.
         });
 
+        //Este state muestra una venetana modal con el vredicto de victoria para el usuario
+        var stateGame_p2_tmp = (lifePlayerTwo_tmp <= 0 )? 1 : 0;
+        this.setState({stateGamePlayerTwo: stateGame_p2_tmp });
+
         //----CUANDO ATACA LA MAQUINA----\\
         var dataAtackPlayerTwo = this.selectRandomAtack();        
         
@@ -132,8 +138,6 @@ export default class home extends Component {
              lifePlayerOne_tmp = this.state.lifeStatusBarOne - (dataAtackPlayerTwo['nuAtckPower'] - this.state.defendingPlayerOne);
         }
         console.log("ATACK 2", dataAtackPlayerTwo);
-
-
         setTimeout(
             function() {
                 this.setState({
@@ -142,8 +146,11 @@ export default class home extends Component {
                 });
             }
             .bind(this),
-            3000
+            4000
         );
+        //Este state muestra una venetana modal con el vredicto de victoria para la maquina
+        var stateGame_p1_tmp = (lifePlayerOne_tmp <= 0 )? 1 : 0;
+        this.setState({stateGamePlayerOne: stateGame_p1_tmp });
          
 
     }
@@ -173,7 +180,8 @@ export default class home extends Component {
         
         return (
             <div className="App">
-
+                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#finishGame"></button>
+                <WindowFinishGame stateGamePlayerOne={this.state.stateGamePlayerOne} stateGamePlayerTwo={this.state.stateGamePlayerTwo}/>
                 <SelectPlayer pokemonList = {this.state.pokemonList} pokemonSelectedUser={this.pokemonSelectedUser} />
                 <div className="container-fluid cambatInit">
 
@@ -185,7 +193,7 @@ export default class home extends Component {
                         <LifeStatusBar namePlayerOne={this.state.namePlayerOne} namePlayerTwo={this.state.namePlayerTwo} lifeStatusBarOne={this.state.lifeStatusBarOne} lifeStatusBarTwo={this.state.lifeStatusBarTwo} />
                         <div className="row">
                             <PlacePlayerOne  imagePlayerOne= {this.state.imagePlayerOne}/>
-                            <Atacks atacks={this.state.actacksPlayerOne} deployAtack={this.deployAtack} />
+                            <Atacks namePlayerOne={this.state.namePlayerOne} atacks={this.state.actacksPlayerOne} deployAtack={this.deployAtack} />
 
                         </div>
                     </div>
