@@ -7,15 +7,16 @@ export default class CombatArea extends Component {
         super(props);
         this.state = {
             name: "",
-            photoURL: ""
+            imageAtack: "https://backgrounddownload.com/wp-content/uploads/2018/09/pokemon-arena-background-3.png"
         }
 
     }
   
     render() {
+       
         return (
             <div className="col">              
-                <img src="https://i.pinimg.com/originals/76/f4/58/76f458f8b83deb0e2b927c451e74c134.gif" className="img-fluid "  width="570" /> 
+                <img src={this.state.imageAtack} className="img-fluid "  width="570" /> 
             </div>
 
         );

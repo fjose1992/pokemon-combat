@@ -7,7 +7,7 @@ export default class PlacePlayerOne extends Component {
         super(props);
         this.state = {
             name: "",
-            photoURL: ""
+            imagePlayerOne: ""
         }
 
     }
@@ -18,7 +18,7 @@ export default class PlacePlayerOne extends Component {
         return (
             <div className="col">
                 <div className="animationplayer">
-                    <img src="https://i.pinimg.com/originals/86/91/9b/86919b9ff6045fd1c3568973e0d050a4.png" className="img-fluid " width="270" />
+                    <img src={this.props.imagePlayerOne} className="img-fluid " width="270" />
                 </div>
             </div>
         )

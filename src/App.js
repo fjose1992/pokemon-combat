@@ -1,43 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-import CombatArea from "./components/CombatArea/CombatArea";
-import PlacePlayerTwo from "./components/PlacePlayerTwo/PlacePlayerTwo";
-import LifeStatusBar from "./components/LifeStatusBar/LifeStatusBar";
-import Atacks from "./components/Atacks/Atacks";
-import PlacePlayerOne from "./components/PlacePlayerOne/PlacePlayerOne";
-import SelectPlayer from "./components/SelectPlayer/SelectPlayer"
-
-
-function App() {
+import Routes from './routes';
 
 
 
+class App extends Component {
 
-  return (
-    <div className="App">
-    
-      <SelectPlayer/>
-      <div className="container-fluid cambatInit">
+  constructor(){
+    super();
+    this.state={
+      appName: "IMUAO - Repositorio de Ingeniria Multimedia",
+      home: false
+    }
+  }
 
-        <div className="container">
-          <div className="row">
-              <CombatArea/>
-              <PlacePlayerTwo/>
-          </div>        
-              <LifeStatusBar/>        
-          <div className="row">
-              <PlacePlayerOne/>
-              <Atacks/>
-
-          </div>
-        </div>
+  render() {
+    return (
+      <div>
+          <Routes name={this.state.appName}/>
       </div>
-      
-    </div>
-  );
+    );
+  }
 }
-
-
 export default App;
