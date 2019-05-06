@@ -14,7 +14,7 @@ export default class Atacks extends Component {
 
   
     render() {
-        console.log("Atacks:",this.props.atacks);
+        
         var atacksRender = "";
         if(this.props.atacks.length == 4){
             atacksRender = (

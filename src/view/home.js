@@ -114,32 +114,42 @@ export default class home extends Component {
         
 
        //----CUANDO ATACA EL USUARIO----\\
+       var lifePlayerTwo_tmp = this.state.lifeStatusBarTwo;
        if(nuAtckPower > this.state.defendingPlayerTwo){
-         var lifePlayerTwo_tmp = nuAtckPower - this.state.defendingPlayerTwo;//Quita los puntos de vida cuando ataca el usuario
+          lifePlayerTwo_tmp = this.state.lifeStatusBarTwo - (nuAtckPower - this.state.defendingPlayerTwo);//Quita los puntos de vida cuando ataca el usuario
         }
-        console.log("Atack Value", lifePlayerTwo_tmp);
+        
         this.setState({
             imageAtack: imgAtack, //Asigna la animacion del ataque selecionado   
             lifeStatusBarTwo: lifePlayerTwo_tmp, //Valor para quitae puntos de vida al opente.
         });
 
         //----CUANDO ATACA LA MAQUINA----\\
-        setTimeout(function(){ this.atackMachine(); }, 3000);
+        var dataAtackPlayerTwo = this.selectRandomAtack();        
+        
+        var lifePlayerOne_tmp = this.state.lifeStatusBarOne;
+        if(dataAtackPlayerTwo['nuAtckPower'] > this.state.defendingPlayerOne){
+             lifePlayerOne_tmp = this.state.lifeStatusBarOne - (dataAtackPlayerTwo['nuAtckPower'] - this.state.defendingPlayerOne);
+        }
+        console.log("ATACK 2", dataAtackPlayerTwo);
+
+
+        setTimeout(
+            function() {
+                this.setState({
+                    imageAtack: dataAtackPlayerTwo['imgAtck'], //Asigna la animacion del ataque selecionado   
+                    lifeStatusBarOne: lifePlayerOne_tmp, //Valor para quitae puntos de vida al opente.
+                });
+            }
+            .bind(this),
+            3000
+        );
          
 
     }
 
     atackMachine(){
-        var dataAtackPlayerTwo = this.selectRandomAtack();        
 
-        if(dataAtackPlayerTwo['nuAtckPower'] > this.state.defendingPlayerOne){
-            var lifePlayerOne_tmp = dataAtackPlayerTwo['nuAtckPower'] - this.state.defendingPlayerOne;
-        }
-        
-        this.setState({
-            imageAtack: dataAtackPlayerTwo['imgAtck'], //Asigna la animacion del ataque selecionado   
-            lifeStatusBarOne: lifePlayerOne_tmp, //Valor para quitae puntos de vida al opente.
-        });
     }
     /**
      * Se encarga de selecionar un ataque al azar 
@@ -148,8 +158,9 @@ export default class home extends Component {
         var allDataPokemon = this.state.allData; //Trae la data del web service ya alcenada en el State
         var dataPlayerTwo = allDataPokemon[this.state.indexPlayerTwo];//Filtra la data por el indice del player Two
         var arAtacks = dataPlayerTwo.arAtacks;//Seleciona el array de ataques
-
+        
         var randomIdex = Math.floor((Math.random() * 4) ); // Busca un indice ramdon para selecionar el ataque
+        
         var dataAtackPlayerTwo = new Array();
         dataAtackPlayerTwo['nuAtckPower'] = arAtacks[randomIdex].nuAtckPower; // Seleciona el valor del atque
         dataAtackPlayerTwo['imgAtck'] = arAtacks[randomIdex].imgAtck; //Seleciona la animacion del ataque
