@@ -12,7 +12,9 @@ export default class Atacks extends Component {
 
     }
 
-  
+    testClick(){
+        console("CLICKEDDD");
+    }
     render() {
         
         var atacksRender = "";
@@ -20,8 +22,7 @@ export default class Atacks extends Component {
             atacksRender = (
                 <div className="row">
                     <div className="col-sm">
-                        <a className="btn-atack atack-1"  href="#" onClick={(e) => this.props.deployAtack(this.props.atacks[0].nuAtckPower, this.props.atacks[0].imgAtck)} >{this.props.atacks[0].stAtckName}</a>
-                        
+                        <a className="btn-atack atack-1"  onClick={(e) => this.props.deployAtack(this.props.atacks[0].nuAtckPower, this.props.atacks[0].imgAtck)} >{this.props.atacks[0].stAtckName}</a>                        
                     </div>
                     <div className="col-sm ">
                         <a className="btn-atack atack-2"  href="#" onClick={(e) => this.props.deployAtack(this.props.atacks[1].nuAtckPower, this.props.atacks[1].imgAtck)}>{this.props.atacks[1].stAtckName}</a>

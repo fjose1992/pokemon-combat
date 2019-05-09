@@ -12,15 +12,14 @@
     color: white;
     width: 200px;
     height: 100px;
-    background: #F2385A;
-    position: relative;
-    margin: 15px;
+  background: #F2385A;
+     margin: 15px;
     top: 28px;
     padding: 12px;
     font-size: 22px;
     border-radius: 10px;
     box-shadow: 0px 15px 0px 0px #f02046, 0px 0px 20px 0px #bbb;
-    transition: all 0.2s;
+      transition: all 0.2s; 
   }
 
   .btn-atack:link{

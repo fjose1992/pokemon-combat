@@ -180,7 +180,7 @@ export default class home extends Component {
         
         return (
             <div className="App">
-                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#finishGame"></button>
+                <br/>
                 <WindowFinishGame stateGamePlayerOne={this.state.stateGamePlayerOne} stateGamePlayerTwo={this.state.stateGamePlayerTwo}/>
                 <SelectPlayer pokemonList = {this.state.pokemonList} pokemonSelectedUser={this.pokemonSelectedUser} />
                 <div className="container-fluid cambatInit">
